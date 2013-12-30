@@ -13,7 +13,7 @@ date = u"""
 ★░★░★░★░█▀▀▀▀░░█░░░█░░░█░░▀▀▀▀█░★░★░★░★ 
 ★░★░★░★░▀▀▀▀▀░░▀▀▀▀▀░░░▀░░░░░░▀░★░★░★░★"""
 
-lable = u"""
+lable_linux = u"""
 ✷░░░█▀▀░░█░█░█▀█░█▀█░░█░░░█░█▀▌░▐▀█░░░✷
 ❂░░░█░░░░█▀█░█░█░█▀▀█░█▀█░█░█░▀█▀░█░░░❂
 ✹░░░▀▀▀░░▀░▀░▀▀▀░▀▀▀▀░▀▀▀░▀░▀░░▀░░▀░░░✹
@@ -32,11 +32,9 @@ text = u"""
 (поверьте им вас не хватает).
 """
 
-star_linux = """
-           ★"""
+star_linux = """           ★\n"""
 
-tree_head_linux = u"""           
-           █"""
+tree_head_linux = u"""           █"""
 
 tree_1_linux = u"""          █▓█
          █▓▓▓█
@@ -83,6 +81,7 @@ if sys.platform.startswith('win'):
   ball_symbol = u"*"
   symbol_4_ball_set = u"^"
 else:
+  lable = "С Новым Годом!\n"#lable_linux
   star = star_linux
   tree_head = tree_head_linux
   tree_1 = tree_1_linux
@@ -94,10 +93,7 @@ else:
 
 def set_color_balls_on_tree(tree="", symbol_4_ball_set="", ball_symbol = ""):
   from random import randint
-  # tree = tree.replace(" ", "")
-  # print tree
   rows = tree.splitlines()
-  # max_len = len(max(rows).split(symbol_4_ball))
   max_count_4_replace = len(tree.split(symbol_4_ball_set))
   max_balls_count_on_tree = max_count_4_replace/3
   min_balls_count_on_tree = max_count_4_replace/5
@@ -107,11 +103,12 @@ def set_color_balls_on_tree(tree="", symbol_4_ball_set="", ball_symbol = ""):
     l = len(rows[row_num].split(symbol_4_ball_set))-1
     if l:
       replace_count = randint(l/5, l/3)
-      if realy_balls_count_on_tree - replace_count and replace_count:
+      if (realy_balls_count_on_tree - replace_count) <=0 :
+        replace_count = realy_balls_count_on_tree
+      if replace_count:
         symbol_step_len = l/replace_count
         a = rows[row_num].index(symbol_4_ball_set)
         start_symbol_num = randint(a,a+1)
-        # print start_symbol_num
         l = list(rows[row_num])
         while start_symbol_num < len(l)-1:
           l[start_symbol_num] = ball_symbol
