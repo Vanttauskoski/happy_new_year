@@ -32,13 +32,13 @@ text = u"""
 (поверьте им вас не хватает).
 """
 
-star = """
+star_linux = """
            ★"""
 
-tree_head = u"""           
+tree_head_linux = u"""           
            █"""
 
-tree_1 = u"""          █▓█
+tree_1_linux = u"""          █▓█
          █▓▓▓█
         █▓▓▓▓▓█
        █▓▓▓▓▓▓▓█
@@ -50,30 +50,46 @@ tree_1 = u"""          █▓█
  █▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█
 █▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█"""
 
-tree_trunk = """           ██
+tree_trunk_linux = """           ██
            ██"""
 
+star_windows = """
+           *"""
 
-tree_4_windows = u"""     
-              ★                                  
-              8                                      
-             G8I                                      
-            OZ7$D                                  
-           56+~I?8                                  
-          ZZ$ZZZ$OZ                                  
-         $?=?I=II+?8                                  
-        8OZZZZZZZZZ8O                               
-       9=ZI=??=?I+I$+D                               
-      OZ$8O$ZZ$ZZZO8OZ8                               
-     0Z?=ZI+I?+II?IZ?=;F                               
-    ZOOZ$OZ$$Z$Z$ZZOZ7OOZO                            
-   $I+$++Z?+II=???I$?=$?+DR                            
-  DO7IZ77O$?7$I7$77O7IZ7I8TY                            
- II+Z?+Z?+ZI=?I=I?+IZ?=$+=$?I                         
-D$$7Z7IZ77Z7I7$I777$Z7IZ7IZ7I7                         
-            DDDD                                      
-            DDDD                                     
-"""
+tree_head_windows = u"""           
+           8"""
+
+tree_1_windows = u"""          8^8
+         8^^^8
+        8^^^^^8
+       8^^^^^^^8
+      8^^^^^^^^^8
+     8^^^^^^^^^^^8
+    8^^^^^^^^^^^^^8
+   8^^^^^^^^^^^^^^^8
+  8^^^^^^^^^^^^^^^^^8
+ 8^^^^^^^^^^^^^^^^^^^8
+8^^^^^^^^^^^^^^^^^^^^^8"""
+
+tree_trunk_windows = """           88
+           88"""
+
+if sys.platform.startswith('win'):
+  lable  = "Happy new Year!"
+  star = star_windows
+  tree_head = tree_head_windows
+  tree_1 = tree_1_windows
+  tree_trunk = tree_trunk_windows
+  ball_symbol = u"*"
+  symbol_4_ball_set = u"^"
+else:
+  star = star_linux
+  tree_head = tree_head_linux
+  tree_1 = tree_1_linux
+  tree_trunk = tree_trunk_linux
+  ball_symbol = u"✹"
+  symbol_4_ball_set = u"▓"
+
 
 
 def set_color_balls_on_tree(tree="", symbol_4_ball_set="", ball_symbol = ""):
@@ -100,25 +116,22 @@ def set_color_balls_on_tree(tree="", symbol_4_ball_set="", ball_symbol = ""):
         while start_symbol_num < len(l)-1:
           l[start_symbol_num] = ball_symbol
           start_symbol_num += symbol_step_len
-        rows[row_num] = u""
+        rows[row_num] = ""
         for i in l:
           rows[row_num] += unicode(i)
         max_count_4_replace = max_count_4_replace - replace_count
     row_num -= 1
   return rows
 
-ball_symbol = u"✹"
-symbol_4_ball_set = u"▓"
-tree_body = [set_color_balls_on_tree(tree_1, symbol_4_ball_set, ball_symbol) for i in xrange(0,2,1)]
-# print len(tree_body)
-
-
+tree_body = [set_color_balls_on_tree(tree_1, symbol_4_ball_set, ball_symbol) for i in xrange(0,1,1)]
 
 def show_all(star="", tree_head="", tree_body="", lable="", text=""):
   i = 0
+  star_color = [WHITE, YELLOW, RED]
+  j = 0
   while True:
     printout(lable)
-    printout(star, YELLOW)
+    printout(star, star_color[j])
     print tree_head
     for row in tree_body[i]:
       for s in row:
@@ -129,7 +142,13 @@ def show_all(star="", tree_head="", tree_body="", lable="", text=""):
       print 
     printout(tree_trunk,GREEN)
     print
-    printout(text, RED)
+    printout(text, WHITE)
+
+    if j < len(star_color)-1:
+      j += 1
+    else:
+      j = 0
+
     if i < len(tree_body)-1:
       i += 1
     else:
