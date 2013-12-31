@@ -73,7 +73,7 @@ tree_trunk_windows = """           88
            88"""
 
 if sys.platform.startswith('win'):
-  lable  = "С Новым Годом!"
+  lable  = u"С Новым Годом!"
   star = star_windows
   tree_head = tree_head_windows
   tree_1 = tree_1_windows
