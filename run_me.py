@@ -22,7 +22,7 @@ lable_linux = u"""
 ✸░░░░░░▀░░░▀▀▀░▐▀▀▀▌░▀▀▀░▀░░▀░░▀░░░░░░✸
 """
 
-text = u"""
+text = """
 Дорогие друзья! Поздравляю вас с Новым 2014 годом!
 Желаю всем вам в наступающем году много новых и интересных задач!
 Чтобы количество начатых проектов равнялось количеству успешных релизов!
@@ -32,7 +32,7 @@ text = u"""
 (поверьте им вас не хватает).
 """
 
-star_linux = """           ★\n"""
+star_linux = u"""           ★\n"""
 
 tree_head_linux = u"""           █"""
 
@@ -48,7 +48,7 @@ tree_1_linux = u"""          █▓█
  █▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█
 █▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█"""
 
-tree_trunk_linux = """           ██
+tree_trunk_linux = u"""           ██
            ██"""
 
 star_windows = """
@@ -69,25 +69,27 @@ tree_1_windows = u"""          8^8
  8^^^^^^^^^^^^^^^^^^^8
 8^^^^^^^^^^^^^^^^^^^^^8"""
 
-tree_trunk_windows = """           88
+tree_trunk_windows = u"""           88
            88"""
 
 if sys.platform.startswith('win'):
-  lable  = "С Новым Годом!"
+  lable  = u"С Новым Годом!"
   star = star_windows
   tree_head = tree_head_windows
   tree_1 = tree_1_windows
   tree_trunk = tree_trunk_windows
-  ball_symbol = u"*"
-  symbol_4_ball_set = u"^"
+  ball_symbol = "*"
+  symbol_4_ball_set = "^"
+  symbol_4_tree_trunk_change = "8"
 else:
-  lable = "С Новым Годом!\n"#lable_linux
+  lable = u"С Новым Годом!\n"#lable_linux
   star = star_linux
   tree_head = tree_head_linux
   tree_1 = tree_1_linux
   tree_trunk = tree_trunk_linux
   ball_symbol = u"✹"
   symbol_4_ball_set = u"▓"
+  symbol_4_tree_trunk_change = u"█"
 
 
 
@@ -122,6 +124,12 @@ def set_color_balls_on_tree(tree="", symbol_4_ball_set="", ball_symbol = ""):
 
 tree_body = [set_color_balls_on_tree(tree_1, symbol_4_ball_set, ball_symbol) for i in xrange(0,1,1)]
 
+# for i in xrange(0,30,1):
+#   print i
+#   printout(unicode(" "), i)
+
+# sys.stdout.write("\x1b[1;%dm" % (30 + 13) + u" " + "\x1b[0m")
+
 def show_all(star="", tree_head="", tree_body="", lable="", text=""):
   i = 0
   star_color = [WHITE, YELLOW, RED]
@@ -136,8 +144,12 @@ def show_all(star="", tree_head="", tree_body="", lable="", text=""):
           printout(unicode(s), random.randint(1, 7))
         else:
           printout(unicode(s), GREEN)
-      print 
-    printout(tree_trunk,GREEN)
+      print
+    for s in tree_trunk:
+      if s == symbol_4_tree_trunk_change:
+        printout(u" ",13)
+      else:
+          printout(unicode(s), GREEN)
     print
     printout(text, WHITE)
 
